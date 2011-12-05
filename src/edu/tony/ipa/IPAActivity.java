@@ -28,6 +28,7 @@ public class IPAActivity extends Activity {
     private Boolean verify = false;
     private String user = null;
     private String userpass = null;
+    private String ipaID = null;
     private Button login, register;
 	
 	//test
@@ -83,6 +84,7 @@ public class IPAActivity extends Activity {
     public void loginOnClick(View v){
     	
     	ArrayList<JSONObject> result_a = null;
+    	ArrayList<JSONObject> result_b = null;
     	
     	if(username.length() != 0 && password.length() != 0){
     		
@@ -125,10 +127,23 @@ public class IPAActivity extends Activity {
     		        		warning.setText("you have to register first");
     		        	}
     		        	else{
+    		        		try{
+    		        			ArrayList<NameValuePair> ipa_nameValuePairs = new ArrayList<NameValuePair>();
+    		        			ipa_nameValuePairs.add(new BasicNameValuePair("AccID",username.getText().toString()));
+
+    		        			result_b = db.DataSearch(ipa_nameValuePairs,"ipa_search");
+    		        			ipaID = result_b.get(0).getString("ipaID");
+    		        			Log.e("12345", ipaID);
+    		        		}
+    		        		catch(Exception e){
+    	    		    		Log.e("log_tag", "Error get data "+e.toString());				
+    	    		    		}
+    		        		
         		        	SharedPreferences settings = getSharedPreferences("Account", 0);
         		        	SharedPreferences.Editor editor = settings.edit();
         		        	editor.putString("username", username.getText().toString());
         		        	editor.putString("password", password.getText().toString());
+        		        	editor.putString("ipaID", ipaID);
         		        	editor.commit();
         		        	verify = true;
         		        	Intent i = new Intent();

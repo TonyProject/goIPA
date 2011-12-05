@@ -4,13 +4,13 @@
  
     <item
         android:state_pressed="true"
-        android:drawable="@drawable/greendroid_application_logo_alt" />
+        android:drawable="@drawable/logo" />
  
     <item
         android:state_focused="true"
-        android:drawable="@drawable/greendroid_application_logo_alt" />
+        android:drawable="@drawable/logo" />
  
     <item
-        android:drawable="@drawable/greendroid_application_logo_normal" />
+        android:drawable="@drawable/logo" />
  
 </selector>

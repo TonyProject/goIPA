@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@drawable/couponback">
+  
+  <TextView 
+  android:text="若您想使用以下的Coupon請點選，系統將會自動產生序號，請與商家核對，並按下使用按鈕，系統將自動刪除此Coupon。"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"/>
+  
+  <ScrollView android:id="@+id/widget49" android:layout_width="fill_parent" android:layout_height="wrap_content" >
+  <LinearLayout 
+  android:orientation="vertical"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:id="@+id/couponLayout"
+  android:paddingLeft="90px"
+  android:paddingTop="10px">
+  </LinearLayout>
+  </ScrollView>
+  
+    
+</LinearLayout>

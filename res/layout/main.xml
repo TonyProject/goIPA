@@ -62,13 +62,14 @@
       	android:text="Log in"
       	android:layout_width="wrap_content"
       	android:layout_height="wrap_content"
-		/>
+      	android:onClick="loginOnClick"/>
       	
       	<Button 
       	android:id="@+id/button2"
       	android:text="Register"
       	android:layout_width="wrap_content"
       	android:layout_height="wrap_content"
+      	android:onClick="registerOnClick"
       	android:layout_marginLeft="10px"/>
       	
       <TextView 

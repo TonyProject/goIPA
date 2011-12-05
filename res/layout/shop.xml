@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"  
-       android:layout_height="wrap_content" android:orientation="vertical" android:baselineAligned="false" android:layout_width="match_parent" android:id="@+id/shoplayout" >   
+       android:layout_height="wrap_content" android:orientation="vertical" android:baselineAligned="false" android:layout_width="match_parent"  >   
+<ScrollView android:id="@+id/widget50" android:layout_width="fill_parent" android:layout_height="wrap_content" >
+<LinearLayout 
+android:id="@+id/shoplayout"
+android:layout_height="wrap_content" android:orientation="vertical"  android:layout_width="match_parent" 
+></LinearLayout>
+</ScrollView>
 </LinearLayout>
+ 

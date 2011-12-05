@@ -8,7 +8,45 @@
   android:background="@drawable/bg1" >
     <LinearLayout android:layout_width="match_parent" android:layout_height="fill_parent" android:id="@+id/linearLayout" android:layout_weight="0.2">
         <ListView android:layout_height="wrap_content" android:id="@+id/item_list" android:layout_width="wrap_content" android:layout_weight="3.5" android:background="#00000000"></ListView>
-        <ImageSwitcher android:layout_weight="1" android:id="@+id/imageswitcher" android:layout_width="fill_parent" android:layout_height="fill_parent"></ImageSwitcher>
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1" >
+            
+            <ImageView
+                android:id="@+id/ipachan"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"/>
+            
+            <ImageView
+                android:id="@+id/upBody"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"/>
+
+            <ImageView
+                android:id="@+id/downBody"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"/>
+
+            <ImageView
+                android:id="@+id/left_hand"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"/>
+
+            <ImageView
+                android:id="@+id/head"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"/>
+
+            <ImageView
+                android:id="@+id/right_hand"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"/>
+
+        </RelativeLayout>
+
     </LinearLayout>
     <RelativeLayout android:layout_gravity="bottom" android:layout_width="match_parent" android:id="@+id/relativeLayout" android:layout_height="wrap_content" android:layout_weight="1">
         <Gallery android:layout_width="fill_parent" android:id="@+id/dress_type" android:layout_height="match_parent"></Gallery>

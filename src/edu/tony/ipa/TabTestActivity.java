@@ -63,6 +63,7 @@ public class TabTestActivity extends GDTabActivity{
         //linearLayout.addView(R.id.LookAroundtitle);
         //linearLayout.addView(findViewById(R.id.LookAroundtitle));
         TabHost th = getTabHost();
+        th.setBackgroundResource(R.drawable.tabback);
         
         LayoutInflater.from(this).inflate(R.layout.tab, th.getTabContentView(),true);
         /*
@@ -92,9 +93,12 @@ public class TabTestActivity extends GDTabActivity{
         
         Intent intent2 = new Intent();
         intent2.setClass(TabTestActivity.this,Honor.class);
-        th.addTab(th.newTabSpec("a").setIndicator("°Ó®a°T®§").setContent(intent));
-        th.addTab(th.newTabSpec("b").setIndicator("¤ıªÌ¤Ñ¤U").setContent(intent2));
-        th.addTab(th.newTabSpec("c").setIndicator("¤jÁn¤½").setContent(R.id.layout3));
+        
+        Intent intent3 = new Intent();
+        intent3.setClass(TabTestActivity.this,Talk.class);
+        th.addTab(th.newTabSpec("a").setIndicator("å•†å®¶è³‡è¨Š").setContent(intent));
+        th.addTab(th.newTabSpec("b").setIndicator("ç‹è€…å¤©ä¸‹").setContent(intent2));
+        th.addTab(th.newTabSpec("c").setIndicator("å¤§è²å…¬").setContent(intent3));
         
         
         //linearLayout.addView(th);
@@ -138,7 +142,7 @@ public class TabTestActivity extends GDTabActivity{
 	    			Button tempBtn = new Button(this);
 	    			tempBtn.setText(activityName.get(i));
 	    			tempBtn.setId(i);
-	    			//ÁÙ­n¼g«öButtonªº°Ê§@
+	    			//Â¡Å¸â‰ nÂºgÂ´Ë†Buttonâ„¢âˆ«âˆÂ ÃŸ@
 	    			tempBtn.setOnClickListener(new View.OnClickListener() {
 	    	             public void onClick(View v) {
 	    	            	 //int id = v.getId();

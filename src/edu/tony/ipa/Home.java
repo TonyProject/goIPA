@@ -16,6 +16,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
@@ -24,6 +25,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +36,7 @@ public class Home extends GDActivity{
 	private String provider;
 	private ArrayList<JSONObject> result;
 	private DB db;
+	private Double lat,lng;
 	
 
 
@@ -49,6 +52,12 @@ public class Home extends GDActivity{
         ImageButton ipaChan = (ImageButton) findViewById(R.id.imageButton1);
         ImageButton lookBtn = (ImageButton) findViewById(R.id.imageButton2);
         ImageButton hotnewsBtn = (ImageButton) findViewById(R.id.imageButton3);
+        ImageButton myCoupon = (ImageButton) findViewById(R.id.imageButton4);
+        ImageView ipaChar = (ImageView) findViewById(R.id.image1);
+        SharedPreferences settings = getSharedPreferences("Account", 0);
+        String user = settings.getString("username", "nouser");
+        Bitmap bitmap = IPAChan.getBitmapFromUrl("http://140.112.107.29/images/ipachan/"+user+".png");
+        ipaChar.setImageBitmap(bitmap);
         
         
         
@@ -82,12 +91,21 @@ public class Home extends GDActivity{
       			startActivity(j);
         	}
         });
+        
+        myCoupon.setOnClickListener(new Button.OnClickListener()
+        {
+        	public void onClick(View v)
+        	{ 
+        		Intent j = new Intent();
+      			j.setClass(Home.this, myCoupon.class);
+      			startActivity(j);
+        	}
+        });
    
     }
      
     
-
-	@Override
+    @Override
 	public boolean onHandleActionBarItemClick(ActionBarItem item, int position) { 
 		//actionbar's onclick
 		switch(item.getItemId()){
@@ -130,7 +148,6 @@ public class Home extends GDActivity{
 					
  				    //選擇店家後，要去DB裡找有沒有這個店家
 					String shopGet = Gshops.get(which);
-					Double lat,lng;
 					ArrayList<NameValuePair> location = new ArrayList<NameValuePair>();
 					ArrayList<JSONObject> shop_loc = new ArrayList<JSONObject>();
 					Log.e("check", shopGet);
@@ -153,25 +170,37 @@ public class Home extends GDActivity{
 						}	
 					}
 					
-					//----新增至checkin table----
-
+					
 					//用accountID找ipaID
 					SharedPreferences settings = getSharedPreferences("Account", 0);
-			        String user = settings.getString("username", "nouser");
-			        Log.e("user", user);
-			        try{
-			        	ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-			        	nameValuePairs.add(new BasicNameValuePair("AccID",user));
-
-			        	ArrayList<JSONObject> result_a = db.DataSearch(nameValuePairs,"ipa_search");
-						Log.e("log_act","size="+result_a.size());
-						for(int i=0;i<result_a.size();i++){
-							Log.e("r_act",result_a.get(i).getString("ipaID"));
+			        String ipaID = settings.getString("ipaID", "nouser");
+			        Log.e("ipaID", ipaID);
+			        
+		        	SharedPreferences.Editor editor = settings.edit();
+		        	editor.putString("lat", String.valueOf(lat));
+		        	editor.putString("lng",String.valueOf(lng));
+		        	editor.commit();
+			        
+			        //----新增至checkin table----
+					try{
+						ArrayList<NameValuePair> check_nameValuePairs = new ArrayList<NameValuePair>();
+						check_nameValuePairs.add(new BasicNameValuePair("IpaID",ipaID));
+						check_nameValuePairs.add(new BasicNameValuePair("Lat",String.valueOf(lat)));
+						check_nameValuePairs.add(new BasicNameValuePair("Lng",String.valueOf(lng)));
+						if(shop_loc.size() == 0){
+							check_nameValuePairs.add(new BasicNameValuePair("ShopID",""));
 						}
+						else{
+							check_nameValuePairs.add(new BasicNameValuePair("ShopID",shop_loc.get(0).getString("shopID")));
+						}
+						
+						
+						ArrayList<JSONObject> result_c = db.DataSearch(check_nameValuePairs,"checkin");
+						Log.e("log_act","size=" + result_c.size());
 					}
-			        catch(Exception e){
+					catch(Exception e){
 			        	Log.e("log_tag", "Error get data "+e.toString());				
-			        }	
+			        }
 					
 				}
 			});

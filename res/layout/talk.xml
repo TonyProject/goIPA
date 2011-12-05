@@ -2,19 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"  
        android:layout_height="wrap_content" android:orientation="vertical" android:baselineAligned="false" android:layout_width="match_parent" android:id="@+id/talklayout" >   
 
-<LinearLayout android:id="@+id/FrameLayout01" android:layout_height="wrap_content" android:layout_width="fill_parent">
+<LinearLayout android:id="@+id/tal" android:layout_height="wrap_content" android:layout_width="fill_parent">
 
 
 <EditText android:id="@+id/text" android:layout_height="wrap_content" android:text="" android:layout_width="wrap_content" android:layout_weight="1"></EditText>
-<Button android:id="@+id/say" android:layout_height="wrap_content" android:text="say" android:layout_gravity="right" android:layout_width="wrap_content" android:layout_weight="1"></Button>
-
+<Button android:id="@+id/say" android:layout_height="wrap_content" android:text="say" android:layout_gravity="right" android:layout_width="wrap_content" android:layout_weight="1" android:onClick="sendmsg"></Button>
+<Button android:id="@+id/renew" android:layout_height="wrap_content" android:text="重新整理" android:layout_gravity="right" android:layout_width="wrap_content" android:layout_weight="1" ></Button>
 
 </LinearLayout>
+
+<ScrollView android:id="@+id/widget54" android:layout_width="fill_parent" android:layout_height="wrap_content" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"  
+       android:layout_height="wrap_content" android:orientation="vertical" android:baselineAligned="false" android:layout_width="match_parent" android:id="@+id/showtalk" >   
+
 <TextView 
     android:id="@+id/show" 
     android:layout_width="wrap_content" 
     android:layout_height="wrap_content" 
     android:text=""
  />
-
+</LinearLayout>
+</ScrollView>
 </LinearLayout>

@@ -7,10 +7,14 @@ import java.util.HashMap;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -32,44 +36,54 @@ import android.widget.ViewSwitcher.ViewFactory;
 
 public class IPACloset extends GDActivity implements ViewFactory{
 	private SimpleAdapter listItemAdapter = null;
-	private ImageSwitcher myImageSwitcher;
+	private ImageSwitcher myImage;
+	private ImageView ipachan, head, upBody, downBody;
 	private ListView list;
 	private Gallery dressGallery;
 	private ArrayList< HashMap<String, Object> > listItem = new ArrayList<HashMap<String, Object>>();
 	private String DRESS_URL= 
     	"http://140.112.107.29/images/dress/";
 	private String[] type = {"headWear", "upBodyWear", "downBodyWear", "feetWear", "left_hand", "right_hand"};
-	private String type_now = null;
-
+	private String type_now = type[0];
+	private HashMap<String, Object> typeID;
+	private String IMAGE_URL = "http://140.112.107.29/images/";
+	
 	/** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setActionBarContentView(R.layout.ipa_closet);
         
-        DB db = new DB();
-    	ArrayList<NameValuePair> ipa = new ArrayList<NameValuePair>();
-    	ipa.add(new BasicNameValuePair("IpaID", IPAChan.ipaID));
-    	ipa.add(new BasicNameValuePair("type", "upBodyWear"));
-    	ArrayList<JSONObject> myCloset = db.DataSearch(ipa,"closet_search");
-    	Log.i("CLOSETTEST", "wear: "+myCloset.toString());
+        list = (ListView) findViewById(R.id.item_list);
+        //myImage = (ImageSwitcher) findViewById(R.id.dress);
+        ipachan = (ImageView) findViewById(R.id.ipachan);
+        head = (ImageView) findViewById(R.id.head);
+        upBody = (ImageView) findViewById(R.id.upBody);
+        downBody = (ImageView) findViewById(R.id.downBody);
+        dressGallery = (Gallery)findViewById(R.id.dress_type);
+        dressGallery.setAdapter(new ImageAdapter(this));
+        dressGallery.setOnItemSelectedListener(myGalleryOnItemSelectedListener);
         
-    	for (int i=0; i<myCloset.size(); i++) {
-    		//The list of items
-    		HashMap<String, Object> item = new HashMap<String, Object>();
-    		Bitmap bitmap = IPAChan.getBitmapFromUrl(DRESS_URL+"10/"+1000+".png");
-    		item.put("item", bitmap);
-    		Log.i("Item_test", item.get("item").toString());
-    		listItem.add(item);
-    	}
+        SharedPreferences settings = getSharedPreferences("Account", 0);
+        String user = settings.getString("username", null);
+        Bitmap bitmap = IPAChan.getBitmapFromUrl(IMAGE_URL + "ipachan/" + user + ".png");
+        ipachan.setImageBitmap(bitmap);
+        
+        typeID = new HashMap<String, Object>();
+        typeID.put(type[0], "1");
+        typeID.put(type[1], "10");
+        typeID.put(type[2], "11");
+        //Log.i("TypeID", typeID.get(type_now).toString());
+        
+        findDress(type_now);
 		
-		list = (ListView) findViewById(R.id.item_list);
+		
         listItemAdapter = 
         	new SimpleAdapter(
         		this,
         		listItem,
         		R.layout.list_items,  
-        		new String[] {"item"},   
+        		new String[] {"item", "dressID"},   
         		new int[] {R.id.item}  
         	);    
         listItemAdapter.setViewBinder(new MyViewBinder());
@@ -88,18 +102,23 @@ public class IPACloset extends GDActivity implements ViewFactory{
             			
             			final HashMap<String, Object> select = 
             				(HashMap<String, Object>) list.getItemAtPosition(position);
-            			//myImageSwitcher.setImageResource(mThumbIds[arg2]);
+            			//myImage.setImageBitmap((Bitmap) select.get("item"));
+            			String dress_item = select.get("dressID").toString();
+            			Log.i("dressID= ", dress_item);
+            	        Bitmap bitmap = IPAChan.getBitmapFromUrl(DRESS_URL+typeID.get(type_now).toString()+"/"+dress_item+".png");
+            	        if (type_now.equals("headWear"))
+            	        	head.setImageBitmap(bitmap);
+            	        else if (type_now.equals("upBodyWear"))
+            	        	upBody.setImageBitmap(bitmap);
+            	        else if (type_now.equals("downBodyWear"))
+            	        	downBody.setImageBitmap(bitmap);
             	}  
             }); 
         
-        myImageSwitcher = (ImageSwitcher)findViewById(R.id.imageswitcher);
-        myImageSwitcher.setFactory(this);
-        myImageSwitcher.setInAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_in));
-        myImageSwitcher.setOutAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
         
-        dressGallery = (Gallery)findViewById(R.id.dress_type);
-        dressGallery.setAdapter(new ImageAdapter(this));
-        dressGallery.setOnItemSelectedListener(myGalleryOnItemSelectedListener);
+        //myImageSwitcher.setFactory(this);
+        //myImageSwitcher.setInAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_in));
+        //myImageSwitcher.setOutAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
         
     }
     public class MyViewBinder implements ViewBinder {
@@ -121,13 +140,41 @@ public class IPACloset extends GDActivity implements ViewFactory{
     	public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
     		// TODO Auto-generated method stub
     		//myImageSwitcher.setImageResource(mThumbIds[arg2]);
-    		//listItem.clear();
+    		listItem.clear();
     		type_now = type[arg2];
+    		findDress(type_now);
+    		listItemAdapter.notifyDataSetChanged();	
     	}
     	public void onNothingSelected(AdapterView<?> arg0) {
     		// TODO Auto-generated method stub
     	}
     };
+    
+    public void findDress(String type_name){
+        DB db = new DB();
+    	ArrayList<NameValuePair> ipa = new ArrayList<NameValuePair>();
+    	ipa.add(new BasicNameValuePair("IpaID", IPAChan.ipaID));
+    	ipa.add(new BasicNameValuePair("type", type_name));
+    	ArrayList<JSONObject> myCloset = db.DataSearch(ipa,"closet_search");
+    	Log.i("CLOSETTEST", "wear: "+myCloset.toString());
+        
+    	for (int i=0; i<myCloset.size(); i++) {
+    		//The list of items
+    		HashMap<String, Object> item = new HashMap<String, Object>();
+    		try {
+	            String dress_item = myCloset.get(i).getString("clothesID");
+	            Bitmap bitmap = IPAChan.getBitmapFromUrl(DRESS_URL+typeID.get(type_now).toString()+"/"+dress_item+".png");
+	            item.put("item", bitmap);
+	            item.put("dressID", dress_item);
+	            //Log.i("Item_test", item.get("item").toString());
+	            listItem.add(item);
+            } catch (JSONException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+            }
+    	}
+    }
+    
     
     private Integer[] mThumbIds = {
     		R.drawable.hair,
@@ -185,6 +232,13 @@ public class IPACloset extends GDActivity implements ViewFactory{
         return i;
     }
     
-    
+    /*private static Bitmap mBmOverlay;
+    public static Bitmap mergeBitmap(Bitmap currentBitmap) {
+        mBmOverlay = Bitmap.createBitmap(mFrameBitmap.getWidth(), mFrameBitmap.getHeight(), mFrameBitmap.getConfig());
+        Canvas canvas = new Canvas(mBmOverlay);
+        canvas.drawBitmap(mFrameBitmap, new Matrix(), null);
+        canvas.drawBitmap(currentBitmap, 5, 5, null);
+        return mBmOverlay;
+    }*/
 }
 

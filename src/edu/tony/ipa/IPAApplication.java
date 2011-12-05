@@ -11,9 +11,9 @@ public class IPAApplication extends GDApplication {
         return Home.class;
     }
  
-    @Override
+    /*@Override
     public Intent getMainApplicationIntent() {
         return new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.app_url)));
-    }
+    }*/
  
 }
