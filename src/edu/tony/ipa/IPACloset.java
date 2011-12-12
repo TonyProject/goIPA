@@ -4,29 +4,32 @@ import greendroid.app.GDActivity;
 import greendroid.widget.ActionBarItem;
 import greendroid.widget.ActionBarItem.Type;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
-import android.location.Criteria;
-import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -42,7 +45,6 @@ import android.widget.ViewSwitcher.ViewFactory;
 
 public class IPACloset extends GDActivity implements ViewFactory{
 	private SimpleAdapter listItemAdapter = null;
-	private ImageSwitcher myImage;
 	private static ImageView ipachan;
 	private ImageView head, upBody, downBody, feet;
 	private ListView list;
@@ -54,8 +56,9 @@ public class IPACloset extends GDActivity implements ViewFactory{
 	private String type_now = type[0];
 	private HashMap<String, Object> typeID;
 	private String IMAGE_URL = "http://140.112.107.29/images/";
-	private static Bitmap ipaBitmap, headBitmap, upBodyBitmap, downBodyBitmap, feetBitmap;
+	private static Bitmap ipaNaked = null, ipaBitmap = null, headBitmap = null, upBodyBitmap = null, downBodyBitmap = null, feetBitmap = null;
 	private final int ACTION_BAR_SAVE = 0;
+	private String user = null;
 	
 	/** Called when the activity is first created. */
     @Override
@@ -75,8 +78,9 @@ public class IPACloset extends GDActivity implements ViewFactory{
         dressGallery.setOnItemSelectedListener(myGalleryOnItemSelectedListener);
         
         SharedPreferences settings = getSharedPreferences("Account", 0);
-        String user = settings.getString("username", null);
+        user = settings.getString("username", null);
         ipaBitmap = IPAChan.getBitmapFromUrl(IMAGE_URL + "ipachan/" + user + ".png");
+        ipaNaked = IPAChan.getBitmapFromUrl(IMAGE_URL + "ipachan_naked/" + user + ".png");
         ipachan.setImageBitmap(ipaBitmap);
         
         typeID = new HashMap<String, Object>();
@@ -261,11 +265,19 @@ public class IPACloset extends GDActivity implements ViewFactory{
 		switch(item.getItemId()){
 			case 0:
 				Log.i("ItemClick", "click!!");
-				ipaBitmap = mergeBitmap(upBodyBitmap);
-				ipaBitmap = mergeBitmap(headBitmap);
-				ipaBitmap = mergeBitmap(downBodyBitmap);
-				ipaBitmap = mergeBitmap(feetBitmap);
-				//head.setImageBitmap(ipaBitmap);
+				if (upBodyBitmap!=null)
+					ipaBitmap = mergeBitmap(upBodyBitmap);
+				if (headBitmap!=null)
+					ipaBitmap = mergeBitmap(headBitmap);
+				if (downBodyBitmap!=null)
+					ipaBitmap = mergeBitmap(downBodyBitmap);
+				if (feetBitmap!=null)
+					ipaBitmap = mergeBitmap(feetBitmap);
+				//head.setImageBitmap(ipaNaked);
+				uploadFile();
+        		Intent i = new Intent();
+      			i.setClass(IPACloset.this, IPAChan.class);
+      			startActivity(i);
 				break;
 			default:
 				return super.onHandleActionBarItemClick(item, position);
@@ -273,8 +285,28 @@ public class IPACloset extends GDActivity implements ViewFactory{
 		return true;
 	}
     
-    public Bitmap getIpaBitmap(){
-    	return ipaBitmap;
-    }
+    InputStream is;
+    
+	private void uploadFile() {
+		ByteArrayOutputStream bao = new ByteArrayOutputStream();
+		ipaBitmap.compress(Bitmap.CompressFormat.PNG, 100, bao);
+        byte [] ba = bao.toByteArray();
+        String ba1 = Base64.encodeBytes(ba);
+        ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+        nameValuePairs.add(new BasicNameValuePair("image",ba1));
+        nameValuePairs.add(new BasicNameValuePair("img_name",user));
+           
+        try {
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpPost httppost = new
+            HttpPost("http://140.112.107.29/upload_image.php");
+            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+            HttpResponse response = httpclient.execute(httppost);
+            HttpEntity entity = response.getEntity();
+            is = entity.getContent();
+        } catch(Exception e){
+            Log.e("log_tag", "Error in http connection "+e.toString());
+        }       
+	}
 }
 

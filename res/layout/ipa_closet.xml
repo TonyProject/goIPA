@@ -20,11 +20,12 @@
             <ImageView
                 android:id="@+id/ipachan"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"/>
+                android:layout_height="fill_parent"/>   
+            
             <ImageView
                 android:id="@+id/feet"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"/>
+                android:layout_height="fill_parent"/>    
             
             <ImageView
                 android:id="@+id/upBody"
@@ -50,6 +51,8 @@
                 android:id="@+id/right_hand"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"/>
+            
+
 
         </RelativeLayout>
 

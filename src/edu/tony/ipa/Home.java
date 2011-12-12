@@ -37,15 +37,17 @@ public class Home extends GDActivity{
 	private ArrayList<JSONObject> result;
 	private DB db;
 	private Double lat,lng;
-	
+	private String ipaID;
+	private String accountID;
+	private String[] eee = {};
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-    	final int ACTION_BAR_LOCATE = 0;
+    	final int ACTION_BAR_INFO = 0;
         super.onCreate(savedInstanceState);
         
-        addActionBarItem(Type.LocateMyself, ACTION_BAR_LOCATE);
+        addActionBarItem(Type.LocateMyself, ACTION_BAR_INFO);
         setActionBarContentView(R.layout.home);
 
         
@@ -56,6 +58,14 @@ public class Home extends GDActivity{
         ImageView ipaChar = (ImageView) findViewById(R.id.image1);
         SharedPreferences settings = getSharedPreferences("Account", 0);
         String user = settings.getString("username", "nouser");
+        
+       
+        
+    	SharedPreferences.Editor editor = settings.edit();
+    	editor.putString("lat", "");
+    	editor.putString("lng","");
+    	editor.commit();
+        
         Bitmap bitmap = IPAChan.getBitmapFromUrl("http://140.112.107.29/images/ipachan/"+user+".png");
         ipaChar.setImageBitmap(bitmap);
         
@@ -103,7 +113,8 @@ public class Home extends GDActivity{
         });
    
     }
-     
+ 
+    /*---------------打卡開始---------------*/
     
     @Override
 	public boolean onHandleActionBarItemClick(ActionBarItem item, int position) { 
@@ -125,9 +136,18 @@ public class Home extends GDActivity{
 			db = new DB();
 			//end自己的經緯度
 			
+			
+			
+			
 			//Google's shop
 			final String[] items = {};
 			final List<String> Gshops = new ArrayList<String>();
+			
+			final String[] items2 = {};
+			final List<String> GetsName = new ArrayList<String>();
+			final List<String> GetsID = new ArrayList<String>();
+			final List<String> AddWhat = new ArrayList<String>();
+			
 			try{
 				result = db.LocSearch(a,b);
 				
@@ -142,7 +162,12 @@ public class Home extends GDActivity{
 			
 			
 			//建立下拉式選單 by Google's shop
+			
 			final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			final AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
+	
+			
+			
 			builder.setTitle("請選擇店家").setItems(Gshops.toArray(items), new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
 					
@@ -162,7 +187,7 @@ public class Home extends GDActivity{
 								shop_loc = db.DataSearch(location,"shop_loc_search");
 								
 								for(int j=0;j<shop_loc.size();j++){
-									Log.e("shop_id",shop_loc.get(j).getString("shopID"));
+									Log.e("shop_id",shop_loc.get(j).getString("shopType"));
 								}
 							}
 						}catch(Exception e){
@@ -173,7 +198,8 @@ public class Home extends GDActivity{
 					
 					//用accountID找ipaID
 					SharedPreferences settings = getSharedPreferences("Account", 0);
-			        String ipaID = settings.getString("ipaID", "nouser");
+			        ipaID = settings.getString("ipaID", "nouser");
+			        accountID = settings.getString("username", "nouser");
 			        Log.e("ipaID", ipaID);
 			        
 		        	SharedPreferences.Editor editor = settings.edit();
@@ -196,7 +222,108 @@ public class Home extends GDActivity{
 						
 						
 						ArrayList<JSONObject> result_c = db.DataSearch(check_nameValuePairs,"checkin");
-						Log.e("log_act","size=" + result_c.size());
+						Log.e("log_act111","size=" + result_c.size());
+						
+
+						if(shop_loc.size() != 0)
+						{
+							ArrayList<NameValuePair> get_nameValuePairs = new ArrayList<NameValuePair>();
+							get_nameValuePairs.add(new BasicNameValuePair("ShopID",shop_loc.get(0).getString("shopID")));
+							get_nameValuePairs.add(new BasicNameValuePair("Type",shop_loc.get(0).getString("shopType")));
+							ArrayList<JSONObject> result_d = db.DataSearch(get_nameValuePairs,"get_condition");
+							Log.e("log_get","size=" + result_d.size());
+							if(result_d.size() > 0)
+							{
+								ArrayList<NameValuePair> ipa_nameValuePairs = new ArrayList<NameValuePair>();
+								ipa_nameValuePairs.add(new BasicNameValuePair("AccID",accountID));
+								ArrayList<JSONObject> result_e = db.DataSearch(ipa_nameValuePairs,"ipa_search");
+								Log.e("log_ipa","size=" + result_e.size());
+								String typeMoney;
+								if(shop_loc.get(0).getString("shopType").equals("0"))
+									typeMoney = "eatMoney";
+								else if(shop_loc.get(0).getString("shopType").equals("1"))
+									typeMoney = "wearMoney";
+								else if(shop_loc.get(0).getString("shopType").equals("2"))
+									typeMoney = "liveMoney";
+								else if(shop_loc.get(0).getString("shopType").equals("3"))
+									typeMoney = "moveMoney";
+								else if(shop_loc.get(0).getString("shopType").equals("4"))
+									typeMoney = "eduMoney";
+								else
+									typeMoney = "funMoney";
+								int count = 0;
+								for(int i = 0; i < result_d.size(); i++)
+								{
+									if(Integer.valueOf(result_d.get(i).getString("money")) <= Integer.valueOf(result_e.get(0).getString(typeMoney)))
+									{
+										
+										if(!result_d.get(i).getString("couponID").equals("0"))
+										{
+											GetsID.add(count,result_d.get(i).getString("couponID"));
+											GetsName.add(count,"coupon:"+result_d.get(i).getString("couponID"));
+											AddWhat.add(count,"coupon");
+											count++;
+										}
+										else if(!result_d.get(i).getString("honorID").equals("0"))
+										{
+											GetsID.add(count,result_d.get(i).getString("honorID"));
+											GetsName.add(count,"honor:"+result_d.get(i).getString("honorID"));
+											AddWhat.add(count,"honor");
+											count++;
+										}
+										else if(!result_d.get(i).getString("clothesID").equals("0"))
+										{
+											GetsID.add(count,result_d.get(i).getString("clothesID"));
+											GetsName.add(count,"clothes:"+result_d.get(i).getString("clothesID"));
+											AddWhat.add(count,"clothes");
+											count++;
+										}
+									}
+								}
+								Log.e("coupon", GetsID.get(0));
+								
+//								
+								builder2.setTitle("目前打卡所獲得的點數可兌換以下選項，請選擇。").setItems(GetsName.toArray(eee), new DialogInterface.OnClickListener() {
+									public void onClick(DialogInterface dialog, int which) {
+										
+										if(AddWhat.get(which).equals("coupon")){
+											ArrayList<NameValuePair> couponAdd_nameValuePairs = new ArrayList<NameValuePair>();
+											couponAdd_nameValuePairs.add(new BasicNameValuePair("AccID",accountID));
+											couponAdd_nameValuePairs.add(new BasicNameValuePair("CouponID",GetsID.get(which)));
+											ArrayList<JSONObject> result_e = db.DataSearch(couponAdd_nameValuePairs,"coupon_add");
+											//扣money還沒寫
+										}
+										else if(AddWhat.get(which).equals("clothes")){
+											ArrayList<NameValuePair> couponAdd_nameValuePairs = new ArrayList<NameValuePair>();
+											couponAdd_nameValuePairs.add(new BasicNameValuePair("IpaID",ipaID));
+											couponAdd_nameValuePairs.add(new BasicNameValuePair("ClothID",GetsID.get(which)));
+											ArrayList<JSONObject> result_e = db.DataSearch(couponAdd_nameValuePairs,"cloth_add");
+										}
+										else if(AddWhat.get(which).equals("honor")){
+											ArrayList<NameValuePair> couponAdd_nameValuePairs = new ArrayList<NameValuePair>();
+											couponAdd_nameValuePairs.add(new BasicNameValuePair("IpaID",ipaID));
+											couponAdd_nameValuePairs.add(new BasicNameValuePair("HonorID",GetsID.get(which)));
+											ArrayList<JSONObject> result_e = db.DataSearch(couponAdd_nameValuePairs,"honor_add");
+										}
+										
+								}});
+								builder2.setNegativeButton("不兌換", new DialogInterface.OnClickListener() {
+						 
+    	            		 
+    	            		 
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								// TODO Auto-generated method stub
+								
+							}
+						});
+								builder2.show();
+							    
+							}
+							
+							
+						}
+						
 					}
 					catch(Exception e){
 			        	Log.e("log_tag", "Error get data "+e.toString());				
@@ -204,14 +331,23 @@ public class Home extends GDActivity{
 					
 				}
 			});
-			AlertDialog ad = builder.create();
-			ad.show();
+			
+			
+			
+			
+			//AlertDialog ad = builder.create();
+			//ad.show();
+			builder.show();
+			
+			
 			break;
 		default:
 			return super.onHandleActionBarItemClick(item, position);
 		}
 		return true;
 	}
+    
+    /*---------------打卡結束---------------*/
 }
     
 
