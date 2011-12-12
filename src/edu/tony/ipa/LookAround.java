@@ -84,7 +84,7 @@ public class LookAround extends GDMapActivity {
         mZoom = (ZoomControls) mapView.getZoomControls();
         linearLayout.addView(mZoom);
         
-        mapController =mapView.getController();	//�]�w���map����
+        mapController =mapView.getController();	//³]©w±±¨îªºmapª«¥ó
 		//get location
 		// Get the location manager
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -119,21 +119,21 @@ public class LookAround extends GDMapActivity {
 	MyLocationOverlay mylayer;
 	
 	private void setupMap() {
-		//�[�J�w��h
-		List<Overlay> overlays = mapView.getOverlays();	//�b�a�ϤW�إߤ@�Ӯy�мh
-		mylayer = new MyLocationOverlay(this, mapView);	//�إߩw��h�A�è��o�ثe�y�Ц�m
-		mylayer.runOnFirstFix(new Runnable() {		//�C����s�ɭn���檺�ʧ@
+		//¥[¤J©w¦ì¼h
+		List<Overlay> overlays = mapView.getOverlays();	//¦b¦a¹Ï¤W«Ø¥ß¤@­Ó®y¼Ð¼h
+		mylayer = new MyLocationOverlay(this, mapView);	//«Ø¥ß©w¦ì¼h¡A¨Ã¨ú±o¥Ø«e®y¼Ð¦ì¸m
+		mylayer.runOnFirstFix(new Runnable() {		//¨C¦¸§ó·s®É­n°õ¦æªº°Ê§@
 			public void run() {
-				mapView.setSatellite(false) ;//�]�w�a���˥ܼҦ�
-				//.setTraffic(true)�G�@��a��
-				//.setSatellite(true)�G�ìP�a��
-				//.setStreetView�G�󴺹�
+				mapView.setSatellite(false) ;//³]©w¦a¹ÏÀË¥Ü¼Ò¦¡
+				//.setTraffic(true)¡G¤@¯ë¦a¹Ï
+				//.setSatellite(true)¡G½Ã¬P¦a¹Ï
+				//.setStreetView¡Gµó´º¹Ï
  
-				mapController.setZoom(17);	//�]�w��j���v1(�a�y)-21(��)
-				mapController.animateTo(mylayer.getMyLocation());	//���w�a�Ϥ����I���ثe��m
+				mapController.setZoom(17);	//³]©w©ñ¤j­¿²v1(¦a²y)-21(µó´º)
+				mapController.animateTo(mylayer.getMyLocation());	//«ü©w¦a¹Ï¤¤¥¡ÂI¬°¥Ø«e¦ì¸m
 			}
 		});
-		mapView.setBuiltInZoomControls(true);	//�[�J�Y�񱱨�
+		mapView.setBuiltInZoomControls(true);	//¥[¤JÁY©ñ±±¨î
 		
 		//catch own position
 		Criteria criteria = new Criteria();
@@ -142,7 +142,7 @@ public class LookAround extends GDMapActivity {
 		Double own_lat = location.getLatitude();
 		Double own_lng = location.getLongitude();
 		
-		//����񩱮a��T(all) + transform
+		//§äªþªñ©±®a¸ê°T(all) + transform
 		ArrayList<Position_transform> pos_array = new ArrayList<Position_transform>();
 		ArrayList<String> stores_in_db = new ArrayList<String>();
 		
@@ -168,7 +168,7 @@ public class LookAround extends GDMapActivity {
 				Log.e("pos_lon = ",pos_array.get(i).location_lon.toString());
 			}*/
 			
-			//Check �O�_���ڭ̪��X�@�t��
+			//Check ¬O§_¬°§Ú­Ìªº¦X§@¼t°Ó
 						
 			ArrayList<NameValuePair> location_1 = new ArrayList<NameValuePair>();
 			ArrayList<JSONObject> shop_loc = new ArrayList<JSONObject>();
@@ -186,7 +186,7 @@ public class LookAround extends GDMapActivity {
 					//Log.e("shop_id",shop_loc.get(j).getString("shopID"));
 					stores_in_db.add(shop_loc.get(j).getString("shopID"));
 				}
-				//�����IPA����(People_near�Oglobal variable)
+				//§äªþªñIPAªº¹Ï(People_near¬Oglobal variable)
 				for(int j=0;j<friend.size();j++){
 					//Log.e("ipa_id",friend.get(j).getString("accountID"));
 					//people_near_id.add(friend.get(j).getInt("ipaID") );
@@ -202,7 +202,7 @@ public class LookAround extends GDMapActivity {
 			}
 			
 			
-			//check for Stores_in_db�O�_�g�J
+			//check for Stores_in_db¬O§_¼g¤J
 			/*
 			for(int i=0; i<stores_in_db.size(); i++){
 				Log.e("shop_id = ",stores_in_db.get(i));
@@ -213,29 +213,29 @@ public class LookAround extends GDMapActivity {
 			Log.e("log_tag", "Error get data "+e.toString());				
 		}	
 				
-		//�ŧi�a�йϥ�from���عϮw
+		//«Å§i¦a¼Ð¹Ï¥Üfrom¤º«Ø¹Ï®w
 		Drawable point_star = getResources().getDrawable(android.R.drawable.star_on);
-		//�]�w�P�P�ϥܤj�p
+		//³]©w¬P¬P¹Ï¥Ü¤j¤p
 		point_star.setBounds(0, 0, point_star.getMinimumWidth(), point_star.getMinimumHeight());
 		Landmark myLandmark = new Landmark(point_star, this);
 		myLandmark.getpostions(stores_in_db);
 		
 		
-		overlays.add(myLandmark);	//�N�a�мh�[�J�a�Ϯy�мh��
-		overlays.add(mylayer);	//�N�w��h�[�J�a�Ϯy�мh��
+		overlays.add(myLandmark);	//±N¦a¼Ð¼h¥[¤J¦a¹Ï®y¼Ð¼h¤¤
+		overlays.add(mylayer);	//±N©w¦ì¼h¥[¤J¦a¹Ï®y¼Ð¼h¤¤
 	}
  
 	@Override
 	protected void onResume() {
 		super.onResume();
-		mylayer.enableMyLocation();	//�i�J�����ɶ}�l��s�w���T
+		mylayer.enableMyLocation();	//¶i¤J­¶­±®É¶}©l§ó·s©w¦ì¸ê°T
 	}
  
 	@Override
 	protected void onPause() {
 		// TODO Auto-generated method stub
 		super.onPause();
-		mylayer.disableMyLocation();	//���}�����ɰ����s
+		mylayer.disableMyLocation();	//Â÷¶}­¶­±®É°±¤î§ó·s
 	}
 
 	@Override
@@ -263,6 +263,7 @@ public class LookAround extends GDMapActivity {
        	            	 	// setActivityDetail(id);
        	            	 	Intent intent = new Intent();
        	            	 	intent.setClass(LookAround.this, people_info_image.class);
+       	            	 	intent.putExtra("ipaID", people_near_list.get(id).ipaID);
        	            	 	intent.putExtra("img", people_near_list.get(id).img);
        	            	 	intent.putExtra("likenum", people_near_list.get(id).likenum);
        	            	 	

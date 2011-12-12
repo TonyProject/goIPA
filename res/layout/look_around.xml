@@ -3,7 +3,7 @@
     android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical">
     
     <LinearLayout android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/MAPLayout">
-        <com.google.android.maps.MapView android:clickable="true" android:id="@+id/mapview" android:layout_width="fill_parent" android:apiKey="07U8simVNF15K7QsU7tFraMxmuGDbdqeT4Ru_JA" android:layout_height="350dip"></com.google.android.maps.MapView>
+        <com.google.android.maps.MapView android:clickable="true" android:id="@+id/mapview" android:layout_width="fill_parent" android:apiKey="0fM4d1bStJDZxjRkBnbW960U6sxUatXnI8cRsGw" android:layout_height="350dip"></com.google.android.maps.MapView>
         <LinearLayout android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/zoomview"></LinearLayout>
     </LinearLayout>
     <HorizontalScrollView android:id="@+id/horizontalScrollView1" android:layout_width="wrap_content" android:layout_height="110dip">

@@ -7,12 +7,12 @@
     >
     
     <LinearLayout android:id="@+id/linearLayout6" 
-    	android:layout_height="wrap_content" 
-    	android:layout_width="fill_parent" 
-    	android:orientation="vertical">
+    	android:layout_height="match_parent" 
+    	android:layout_width="match_parent" 
+    	android:orientation="vertical" android:layout_weight="0.35">
         
         <ImageView android:src="@drawable/login" 
-        	android:id="@+id/image2" android:layout_width="match_parent" android:layout_height="340dp">
+        	android:id="@+id/image2" android:layout_width="match_parent" android:layout_height="match_parent">
         </ImageView> 
     </LinearLayout>
 
@@ -20,7 +20,7 @@
       android:orientation="horizontal" 
       android:id="@+id/linearLayout4" 
       android:layout_width="match_parent"
-      android:layout_height="wrap_content">
+      android:layout_height="match_parent" android:layout_weight="1">
 	<TextView  
    		android:layout_width="wrap_content" 
    	 	android:layout_height="wrap_content" 
@@ -29,7 +29,7 @@
 	<EditText
 		android:id="@+id/editText1"
 		android:hint="at least 4 character"
-		android:layout_height="wrap_content" android:layout_width="match_parent">
+		android:layout_height="match_parent" android:layout_width="match_parent">
 	</EditText>
     </LinearLayout>
     
@@ -38,7 +38,7 @@
       android:orientation="horizontal" 
       android:id="@+id/linearLayout5" 
       android:layout_width="match_parent"
-      android:layout_height="wrap_content">
+      android:layout_height="match_parent" android:layout_weight="1">
 	<TextView  
     	android:layout_width="wrap_content" 
    	 	android:layout_height="wrap_content" 
@@ -48,7 +48,7 @@
 		android:id="@+id/editText2"
 		android:hint="at least 6 character"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content">
+		android:layout_height="match_parent">
 	</EditText>
     </LinearLayout>
     
@@ -56,19 +56,19 @@
       android:orientation="horizontal" 
       android:id="@+id/linearLayout7" 
       android:layout_width="match_parent"
-      android:layout_height="wrap_content">
+      android:layout_height="match_parent" android:layout_weight="1">
       <Button 
       	android:id="@+id/button1"
       	android:text="Log in"
       	android:layout_width="wrap_content"
-      	android:layout_height="wrap_content"
+      	android:layout_height="match_parent"
       	android:onClick="loginOnClick"/>
       	
       	<Button 
       	android:id="@+id/button2"
       	android:text="Register"
       	android:layout_width="wrap_content"
-      	android:layout_height="wrap_content"
+      	android:layout_height="match_parent"
       	android:onClick="registerOnClick"
       	android:layout_marginLeft="10px"/>
       	

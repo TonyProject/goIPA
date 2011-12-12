@@ -2,7 +2,9 @@
 <LinearLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
-  android:layout_height="match_parent" android:orientation="vertical">
+  android:layout_height="match_parent" 
+  android:orientation="vertical"
+  android:background="@drawable/bg1">
     <ImageView android:layout_width="fill_parent" android:layout_gravity="center" android:id="@+id/info_ipachan" android:adjustViewBounds="true" android:layout_height="340dip"></ImageView>
     <LinearLayout android:orientation="horizontal" android:layout_height="match_parent" android:layout_width="wrap_content" android:id="@+id/info_like_amount_layout">
         <ImageView android:src="@drawable/like" android:layout_width="wrap_content" android:id="@+id/image_like" android:adjustViewBounds="true" android:layout_height="fill_parent"></ImageView>

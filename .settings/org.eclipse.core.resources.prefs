@@ -1,7 +1,9 @@
-#Mon Dec 05 23:31:20 CST 2011
+#Mon Dec 12 21:31:10 CST 2011
 eclipse.preferences.version=1
 encoding//src/edu/tony/ipa/IPAChan.java=UTF-8
 encoding//src/edu/tony/ipa/IPACloset.java=UTF-8
 encoding//src/edu/tony/ipa/IPAHonor.java=UTF-8
+encoding//src/edu/tony/ipa/LookAround.java=UTF-8
 encoding//src/edu/tony/ipa/RadarChart.java=UTF-8
 encoding//src/edu/tony/ipa/TabTestActivity.java=UTF-8
+encoding//src/edu/tony/ipa/UploadImage.java=UTF-8

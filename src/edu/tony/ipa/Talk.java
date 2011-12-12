@@ -11,6 +11,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.location.Criteria;
@@ -46,13 +47,31 @@ public class Talk extends Activity {
         
         showtext = (TextView)findViewById(R.id.show);
         say = (Button)findViewById(R.id.say);
+        renew = (Button)findViewById(R.id.renew);
         text = (EditText)findViewById(R.id.text);
         linearlayout = (LinearLayout)findViewById(R.id.tal);
         showlayout = (LinearLayout)findViewById(R.id.showtalk);
         idList = new ArrayList<String>();
         msgList = new ArrayList<String>();
         timeList = new ArrayList<String>();
-      
+        
+        SharedPreferences settings = getSharedPreferences("Account", 0);
+        String islng = settings.getString("lng", "");
+		String islat = settings.getString("lat", "");
+		//say.setClickable(false);
+		//say.setEnabled(false);
+        if(islng=="")
+        {
+        	say.setEnabled(false);
+        	
+        	AlertDialog.Builder builder = new AlertDialog.Builder(this);	
+        	builder.setMessage("請先check in,才能使用大聲公");
+        	builder.show();
+        }
+        else
+        {
+        	say.setEnabled(true);
+        }
         //say.setOnClickListener(sendmsg);
         say.setOnClickListener(new Button.OnClickListener()
         {
@@ -97,7 +116,7 @@ public class Talk extends Activity {
         });   
         
         
-        renew = (Button)findViewById(R.id.renew);
+        //renew = (Button)findViewById(R.id.renew);
         renew.setOnClickListener(new Button.OnClickListener()
         {
         	public void onClick(View v)
@@ -181,9 +200,9 @@ public class Talk extends Activity {
             catch(Exception e){
         		Log.e("log_tag", "Error get data "+e.toString());				
         		}
-	    
+	    if(timeList.size()>0)
             sort(timeList, 0, timeList.size()-1);
-            Log.e("mmm",timeList.get(0));
+            /*Log.e("mmm",timeList.get(0));
             Log.e("mmm",timeList.get(1));
             Log.e("mmm",timeList.get(2));
             Log.e("mmm",timeList.get(3));
@@ -197,8 +216,8 @@ public class Talk extends Activity {
             Log.e("mmm",idList.get(1));
             Log.e("mmm",idList.get(2));
             Log.e("mmm",idList.get(3));
-            
-            
+            */
+          if(msgList.size()>0)  
             addview(msgList,idList);
 	}
 	

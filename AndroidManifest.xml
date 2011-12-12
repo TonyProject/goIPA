@@ -37,6 +37,7 @@
         <activity android:name="TabTestActivity"></activity>
         <activity android:name="myCoupon"></activity>
         <activity android:name="people_info_image"></activity>
+        <activity android:name="Shopmap"></activity>
 
     </application>
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>

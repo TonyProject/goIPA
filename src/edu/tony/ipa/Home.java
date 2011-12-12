@@ -42,10 +42,10 @@ public class Home extends GDActivity{
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-    	final int ACTION_BAR_INFO = 0;
+    	final int ACTION_BAR_LOCATE = 0;
         super.onCreate(savedInstanceState);
         
-        addActionBarItem(Type.LocateMyself, ACTION_BAR_INFO);
+        addActionBarItem(Type.LocateMyself, ACTION_BAR_LOCATE);
         setActionBarContentView(R.layout.home);
 
         

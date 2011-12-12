@@ -149,7 +149,7 @@ public ArrayList<JSONObject> DataSearch (ArrayList<NameValuePair> nameValuePairs
 		//Log.e("log_tag","length "+jArray.length());
 		//Log.e("log_tag",jArray.optJSONObject(0).toString());
 		if("false".equals(jOb.get("output")))
-			Log.e("log_tag","false");
+			Log.e("log_tag","false"+jOb.get("message").toString());
 		else{
 			Log.e("Log_tag","true");
 			if(jOb.has("result")){

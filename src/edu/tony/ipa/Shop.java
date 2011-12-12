@@ -8,7 +8,9 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Criteria;
 import android.location.Location;
@@ -18,11 +20,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 
 public class Shop extends Activity {
 	/** Called when the activity is first created. */
 	private ArrayList<JSONObject> result_a;
 	private ArrayList<JSONObject> result_s;
+	private ArrayList<JSONObject> result_s2;
 	private DB db;
 	private List<String> activityDetailList;
 	private List<String> activityList;
@@ -76,7 +80,15 @@ public class Shop extends Activity {
         
         //getshopfromwhere(64.12334555,122.63445252);
         //getActivity();
+            
+            /*
+        activityList.add("123123123");
+        activityDetailList.add("zzzzz");
+        shopIDList.add("100011");
         
+        activityList.add("aaasds");
+        activityDetailList.add("222");
+        shopIDList.add("100012");*/
         addBtn(activityList.size(),activityList);
         
 	}
@@ -135,14 +147,16 @@ public class Shop extends Activity {
     }
     
     public void addBtn(int count,List<String> activityName){
+    	final AlertDialog.Builder builder = new AlertDialog.Builder(this);
     	
     	if(count > 0){
     		int k;
     		for(int i = 0; i < count; i++){
     			Button tempBtn = new Button(this);
+    			ListView list = new ListView(this);
     			tempBtn.setText(activityName.get(i));
     			tempBtn.setId(Integer.valueOf(shopIDList.get(i)));
-    			
+    			final String des = activityDetailList.get(i);
     			//還要寫按Button的動作
     			tempBtn.setOnClickListener(new View.OnClickListener() {
     	             public void onClick(View v) {
@@ -154,12 +168,65 @@ public class Shop extends Activity {
     	            	 bundle.putString("ID", String.valueOf(id));
     	            	 
     	            	 detailintent.putExtras(bundle);
-    	            	 startActivity(detailintent);
+    	            	 try{
+    	            	 ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+    	 				 nameValuePairs.add(new BasicNameValuePair("ShopID", String.valueOf(id)));
+    	 				
+    	 				 result_s2 = db.DataSearch(nameValuePairs,"shop_search");
+    	            	 
+    	 				final Bundle bundle1 = new Bundle();
+   	            	    bundle1.putString("lat", result_s2.get(0).getString("latitude"));
+   	            	    bundle1.putString("lng", result_s2.get(0).getString("longitude"));
+   	            	    bundle1.putString("ID", String.valueOf(id));
+   	            	    //detailintent.putExtras(bundle1);
+    	 				 
+    	 				 
+    	            	 
+    	            	 builder.setMessage("店名:"+result_s2.get(0).getString("shopName")+ "\n" 
+    	            			 +"分店:"+result_s2.get(0).getString("branch")+ "\n" 
+    	            			 +"地址:"+result_s2.get(0).getString("address")+ "\n"
+    	            			 +"電話:"+result_s2.get(0).getString("phone")+ "\n"
+    	            			 +"商家資訊:"+result_s2.get(0).getString("description")+ "\n"+ "\n"
+    	            			 +"活動說明:"+des+ "\n"
+    	            			 );
+    	            	 
+    	            	 builder.setPositiveButton("返回", new DialogInterface.OnClickListener() {
+						 
+    	            		 
+    	            		 
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								// TODO Auto-generated method stub
+								
+							}
+						});
+    	            	 
+    	            	 builder.setNegativeButton("地圖", new DialogInterface.OnClickListener() {
+							
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								// TODO Auto-generated method stub
+								Intent map = new Intent();
+		    	            	map.setClass(Shop.this, Shopmap.class);
+		    	            	
+		    	            	map.putExtras(bundle1);
+		    	            	startActivity(map);
+		    	            	Log.e("wdwd", "1111");
+							}
+						});
+    	            	 
+    	            	 
+    	            	 builder.show();
+    	            	 }//startActivity(detailintent);
+    	            	 catch(Exception e){
+    	     	    		Log.e("log_tag", "Error get data "+e.toString());				
+    	     	    		}
     	            	 
     	             }
     	         });
-
+                
     			linearLayout.addView(tempBtn, 300, 100);
+    			linearLayout.setGravity(17);
     		}
     	}
     	
