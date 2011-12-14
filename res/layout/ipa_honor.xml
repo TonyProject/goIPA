@@ -8,10 +8,10 @@
 <GridView  
 	android:id="@+id/honor"
     android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
+    android:layout_height="fill_parent" 
 	android:numColumns="3"
     android:verticalSpacing="5dip"
-    />
+    android:layout_gravity="center"/>
 
 <RelativeLayout
     android:id="@+id/relativeLayout1"

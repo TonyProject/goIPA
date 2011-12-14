@@ -157,7 +157,7 @@ public class Shop extends Activity {
     			tempBtn.setText(activityName.get(i));
     			tempBtn.setId(Integer.valueOf(shopIDList.get(i)));
     			final String des = activityDetailList.get(i);
-    			//ÁÙ­n¼g«öButtonªº°Ê§@
+    			//Â¡Å¸â‰ nÂºgÂ´Ë†Buttonâ„¢âˆ«âˆÂ ÃŸ@
     			tempBtn.setOnClickListener(new View.OnClickListener() {
     	             public void onClick(View v) {
     	            	 int id = v.getId();
@@ -182,15 +182,15 @@ public class Shop extends Activity {
     	 				 
     	 				 
     	            	 
-    	            	 builder.setMessage("©±¦W:"+result_s2.get(0).getString("shopName")+ "\n" 
-    	            			 +"¤À©±:"+result_s2.get(0).getString("branch")+ "\n" 
-    	            			 +"¦a§}:"+result_s2.get(0).getString("address")+ "\n"
-    	            			 +"¹q¸Ü:"+result_s2.get(0).getString("phone")+ "\n"
-    	            			 +"°Ó®a¸ê°T:"+result_s2.get(0).getString("description")+ "\n"+ "\n"
-    	            			 +"¬¡°Ê»¡©ú:"+des+ "\n"
+    	            	 builder.setMessage("åº—å:"+result_s2.get(0).getString("shopName")+ "\n" 
+    	            			 +"åˆ†åº—:"+result_s2.get(0).getString("branch")+ "\n" 
+    	            			 +"åœ°å€:"+result_s2.get(0).getString("address")+ "\n"
+    	            			 +"é›»è©±:"+result_s2.get(0).getString("phone")+ "\n"
+    	            			 +"æè¿°:"+result_s2.get(0).getString("description")+ "\n"+ "\n"
+    	            			 +"æ¢ä»¶:"+des+ "\n"
     	            			 );
     	            	 
-    	            	 builder.setPositiveButton("ªğ¦^", new DialogInterface.OnClickListener() {
+    	            	 builder.setPositiveButton("ç¢ºå®š", new DialogInterface.OnClickListener() {
 						 
     	            		 
     	            		 
@@ -201,7 +201,7 @@ public class Shop extends Activity {
 							}
 						});
     	            	 
-    	            	 builder.setNegativeButton("¦a¹Ï", new DialogInterface.OnClickListener() {
+    	            	 builder.setNegativeButton("åœ°åœ–", new DialogInterface.OnClickListener() {
 							
 							@Override
 							public void onClick(DialogInterface dialog, int which) {

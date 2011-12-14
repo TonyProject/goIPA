@@ -37,7 +37,7 @@ public class people_info_image extends GDActivity  {
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-        setActionBarContentView(R.layout.people_info_image);
+        setActionBarContentView(R.layout.people_info_image2);
         
         info_ipachan = (ImageView)findViewById(R.id.info_ipachan);
         image_like = (ImageView)findViewById(R.id.image_like);

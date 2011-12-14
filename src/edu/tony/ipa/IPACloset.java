@@ -57,14 +57,14 @@ public class IPACloset extends GDActivity implements ViewFactory{
 	private HashMap<String, Object> typeID;
 	private String IMAGE_URL = "http://140.112.107.29/images/";
 	private static Bitmap ipaNaked = null, ipaBitmap = null, headBitmap = null, upBodyBitmap = null, downBodyBitmap = null, feetBitmap = null;
-	private final int ACTION_BAR_SAVE = 0;
+	private final int ACTION_BAR_GALLERY = 0;
 	private String user = null;
 	
 	/** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addActionBarItem(Type.Gallery, ACTION_BAR_SAVE);
+        addActionBarItem(Type.Gallery, ACTION_BAR_GALLERY);
         setActionBarContentView(R.layout.ipa_closet);
         
         list = (ListView) findViewById(R.id.item_list);

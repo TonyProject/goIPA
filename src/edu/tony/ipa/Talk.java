@@ -65,7 +65,7 @@ public class Talk extends Activity {
         	say.setEnabled(false);
         	
         	AlertDialog.Builder builder = new AlertDialog.Builder(this);	
-        	builder.setMessage("½Ğ¥ıcheck in,¤~¯à¨Ï¥Î¤jÁn¤½");
+        	builder.setMessage("è«‹å…ˆcheck in,æ‰èƒ½ä½¿ç”¨å¤§è²å…¬");
         	builder.show();
         }
         else
@@ -92,7 +92,7 @@ public class Talk extends Activity {
     		try{
             	ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
             	
-            	//accID,lng,lat ­n½Õ¾ã
+            	//accID,lng,lat â‰ nÎ©â€™Ã¦â€
             	nameValuePairs.add(new BasicNameValuePair("AccID",user));
             	nameValuePairs.add(new BasicNameValuePair("Lng",String.valueOf(lng)));
     			nameValuePairs.add(new BasicNameValuePair("Lat",String.valueOf(lat)));
@@ -269,14 +269,14 @@ public class Talk extends Activity {
             int i = left; 
             int j = right + 1; 
             while(true) { 
-                // ¦V¥k§ä 
+                // Â¶Vâ€¢kÃŸâ€° 
             	//Date date = new Date();
             	DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             	
             	while(i + 1 < time.size() && Long.valueOf(time.get(++i)) < Long.valueOf(time.get(left)) );
             	
             		//while(i + 1 < time.size() && (Time.valueOf(df.format(time.get(++i)))).before(Time.valueOf(df.format(time.get(left))))) ;   
-                // ¦V¥ª§ä 
+                // Â¶Vâ€¢â„¢ÃŸâ€° 
             	while(j -1 > -1 &&  Long.valueOf(time.get(--j)) > Long.valueOf(time.get(left))) ;
             	
                 if(i >= j) 
@@ -284,8 +284,8 @@ public class Talk extends Activity {
                 swap(time, i, j); 
             } 
             swap(time, left, j); 
-            sort(time, left, j-1);   // ¹ï¥ªÃä¶i¦æ»¼°j 
-            sort(time, j+1, right);  // ¹ï¥kÃä¶i¦æ»¼°j 
+            sort(time, left, j-1);   // Ï€Ã”â€¢â„¢âˆšâ€°âˆ‚iÂ¶ÃŠÂªÂºâˆj 
+            sort(time, j+1, right);  // Ï€Ã”â€¢kâˆšâ€°âˆ‚iÂ¶ÃŠÂªÂºâˆj 
         }
 	}
     

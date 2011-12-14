@@ -48,7 +48,8 @@
 		android:id="@+id/editText2"
 		android:hint="at least 6 character"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent">
+		android:layout_height="match_parent"
+		android:inputType="textPassword">
 	</EditText>
     </LinearLayout>
     

@@ -30,7 +30,7 @@ public class myCoupon extends GDActivity {
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	   	
-	    final int ACTION_BAR_INFO = 0;//¥[¤Wcheckin button in action bar
+	    final int ACTION_BAR_INFO = 0;//â€¢[Â§Wcheckin button in action bar
 	    addActionBarItem(Type.LocateMyself, ACTION_BAR_INFO);
 	       
 	    setActionBarContentView(R.layout.mycoupon);
@@ -52,19 +52,19 @@ public class myCoupon extends GDActivity {
     		int k;
     		for(int i = 0; i < count; i++){
     			Button tempBtn = new Button(this);
-    			//§ìCoupon§¹¾ã¸ê°T
+    			//ÃŸÃCouponÃŸÏ€Ã¦â€âˆÃâˆT
     			try{
     				ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
     				nameValuePairs.add(new BasicNameValuePair("CouponID",couponName.get(i)));
     				
-    				//§äcoupon¸ê°T
+    				//ÃŸâ€°couponâˆÃâˆT
     				ArrayList<JSONObject> result_a = db.DataSearch(nameValuePairs,"coupon_search");
     				Log.e("log_act","size="+result_a.size());
 //    				for(int j=0;j<result_a.size();j++){
 //    					Log.e("r_act",result_a.get(j).getString("shopID"));
 //    				}
     
-    				//§äshop¸ê°T
+    				//ÃŸâ€°shopâˆÃâˆT
     				ArrayList<NameValuePair> shop_nameValuePairs = new ArrayList<NameValuePair>();
     				shop_nameValuePairs.add(new BasicNameValuePair("ShopID",result_a.get(0).getString("shopID")));
 
@@ -72,7 +72,10 @@ public class myCoupon extends GDActivity {
     				Log.e("log_act2","size="+result_b.size());
     				
     				tempBtn.setHeight(500);
-    				tempBtn.setText(result_b.get(0).getString("shopName")+" "+result_b.get(0).getString("branch")+"\n"+ result_a.get(0).getString("couponName") + "\n" + result_a.get(0).getString("startDate").substring(0, 10)+"~"+ result_a.get(0).getString("endDate").substring(0, 10)+"\n»¡©ú:"+result_a.get(0).getString("description"));
+    				tempBtn.setBackgroundResource(R.drawable.mycoupon);
+    				tempBtn.setPadding(0, 20, 0, 0);
+    				
+    				tempBtn.setText(result_b.get(0).getString("shopName")+" åˆ†åº—ï¼š"+result_b.get(0).getString("branch")+"\n"+ result_a.get(0).getString("couponName") + "\n" + result_a.get(0).getString("startDate").substring(0, 10)+"~"+ result_a.get(0).getString("endDate").substring(0, 10)+"\nèªªæ˜:"+result_a.get(0).getString("description"));
     				
     				
     			}
@@ -84,12 +87,12 @@ public class myCoupon extends GDActivity {
     			//+ " " +Name.get(i)
     			tempBtn.setId(Integer.valueOf(couponName.get(i)));
     			final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-    			//ÁÙ­n¼g«öButtonªº°Ê§@
+    			//Â¡Å¸â‰ nÂºgÂ´Ë†Buttonâ„¢âˆ«âˆÂ ÃŸ@
     			tempBtn.setOnClickListener(new View.OnClickListener() {
     	             public void onClick(View v) {
     	            	 final int id = v.getId();
     	            	// setActivityDetail(id);
-    	            	 builder.setMessage("½T©w­n¨Ï¥Î¦¹Coupon\n" + "§Ç¸¹ :" + String.valueOf(id)).setPositiveButton("¬O", new DialogInterface.OnClickListener() {
+    	            	 builder.setMessage("è«‹é¸æ“‡Coupon\n" + "åºè™Ÿ :" + String.valueOf(id)).setPositiveButton("ä½¿ç”¨", new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int which) {
 								try{
 									ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
@@ -110,7 +113,7 @@ public class myCoupon extends GDActivity {
 								
 							}
 						}).
-						setNegativeButton("§_", new DialogInterface.OnClickListener() {
+						setNegativeButton("ä¸ä½¿ç”¨", new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int which) {
 								
 								

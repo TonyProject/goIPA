@@ -711,13 +711,16 @@ containing a value of this type.
         public static final int login=0x7f020060;
         public static final int logo=0x7f020061;
         public static final int look2=0x7f020062;
-        public static final int myself3=0x7f020063;
-        public static final int right_hand=0x7f020064;
-        public static final int share=0x7f020065;
-        public static final int shoes=0x7f020066;
-        public static final int six=0x7f020067;
-        public static final int tabback=0x7f020068;
-        public static final int textedit=0x7f020069;
+        public static final int love=0x7f020063;
+        public static final int love2=0x7f020064;
+        public static final int mycoupon=0x7f020065;
+        public static final int myself3=0x7f020066;
+        public static final int right_hand=0x7f020067;
+        public static final int share=0x7f020068;
+        public static final int shoes=0x7f020069;
+        public static final int six=0x7f02006a;
+        public static final int tabback=0x7f02006b;
+        public static final int textedit=0x7f02006c;
     }
     public static final class id {
         public static final int MAPLayout=0x7f050045;
@@ -778,9 +781,9 @@ containing a value of this type.
         public static final int imageButton2=0x7f05002d;
         public static final int imageButton3=0x7f05002e;
         public static final int imageButton4=0x7f05002f;
-        public static final int image_like=0x7f050058;
-        public static final int info_ipachan=0x7f050056;
-        public static final int info_like_amount_layout=0x7f050057;
+        public static final int image_like=0x7f050057;
+        public static final int info_ipachan=0x7f05005a;
+        public static final int info_like_amount_layout=0x7f050056;
         public static final int ipachan=0x7f050033;
         public static final int item=0x7f050044;
         public static final int item_list=0x7f050039;
@@ -790,8 +793,8 @@ containing a value of this type.
         public static final int ldpi=0x7f050003;
         public static final int left=0x7f050009;
         public static final int left_hand=0x7f05003d;
-        public static final int like_amount=0x7f050059;
-        public static final int like_imageButton=0x7f05005a;
+        public static final int like_amount=0x7f050058;
+        public static final int like_imageButton=0x7f050059;
         public static final int linearLayout=0x7f050038;
         public static final int linearLayout1=0x7f050049;
         public static final int linearLayout2=0x7f050029;
@@ -886,12 +889,13 @@ containing a value of this type.
         public static final int main=0x7f030026;
         public static final int mycoupon=0x7f030027;
         public static final int people_info_image=0x7f030028;
-        public static final int register=0x7f030029;
-        public static final int shop=0x7f03002a;
-        public static final int shopdetail=0x7f03002b;
-        public static final int shopmap=0x7f03002c;
-        public static final int tab=0x7f03002d;
-        public static final int talk=0x7f03002e;
+        public static final int people_info_image2=0x7f030029;
+        public static final int register=0x7f03002a;
+        public static final int shop=0x7f03002b;
+        public static final int shopdetail=0x7f03002c;
+        public static final int shopmap=0x7f03002d;
+        public static final int tab=0x7f03002e;
+        public static final int talk=0x7f03002f;
     }
     public static final class string {
         public static final int app_name=0x7f08001d;

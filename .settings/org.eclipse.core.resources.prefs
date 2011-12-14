@@ -1,8 +1,13 @@
-#Mon Dec 12 23:26:21 CST 2011
+#Wed Dec 14 14:11:23 CST 2011
 eclipse.preferences.version=1
+encoding//src/edu/tony/ipa/Home.java=UTF-8
+encoding//src/edu/tony/ipa/Honor.java=UTF-8
 encoding//src/edu/tony/ipa/IPAChan.java=UTF-8
 encoding//src/edu/tony/ipa/IPACloset.java=UTF-8
 encoding//src/edu/tony/ipa/IPAHonor.java=UTF-8
 encoding//src/edu/tony/ipa/LookAround.java=UTF-8
 encoding//src/edu/tony/ipa/RadarChart.java=UTF-8
+encoding//src/edu/tony/ipa/Shop.java=UTF-8
 encoding//src/edu/tony/ipa/TabTestActivity.java=UTF-8
+encoding//src/edu/tony/ipa/Talk.java=UTF-8
+encoding//src/edu/tony/ipa/myCoupon.java=UTF-8

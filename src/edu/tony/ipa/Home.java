@@ -114,7 +114,7 @@ public class Home extends GDActivity{
    
     }
  
-    /*---------------¥´¥d¶}©l---------------*/
+    /*---------------â€¢Â¥â€¢dâˆ‚}Â©l---------------*/
     
     @Override
 	public boolean onHandleActionBarItemClick(ActionBarItem item, int position) { 
@@ -123,7 +123,7 @@ public class Home extends GDActivity{
 		case 0:
 			//****checkin here
 			
-			//¦Û¤vªº¸g½n«×
+			//Â¶â‚¬Â§vâ„¢âˆ«âˆgÎ©nÂ´â—Š
 			locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
 			Criteria criteria = new Criteria();
 			provider = locationManager.getBestProvider(criteria, false);
@@ -134,7 +134,7 @@ public class Home extends GDActivity{
 			Log.e("latitude", String.valueOf(a));
 			result = new ArrayList<JSONObject>();
 			db = new DB();
-			//end¦Û¤vªº¸g½n«×
+			//endÂ¶â‚¬Â§vâ„¢âˆ«âˆgÎ©nÂ´â—Š
 			
 			
 			
@@ -161,17 +161,17 @@ public class Home extends GDActivity{
 			//end Google's shop
 			
 			
-			//«Ø¥ß¤U©Ô¦¡¿ï³æ by Google's shop
+			//Â´Ã¿â€¢ï¬‚Â§UÂ©â€˜Â¶Â°Ã¸Ã”â‰¥ÃŠ by Google's shop
 			
 			final AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			final AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
 	
 			
 			
-			builder.setTitle("½Ğ¿ï¾Ü©±®a").setItems(Gshops.toArray(items), new DialogInterface.OnClickListener() {
+			builder.setTitle("è«‹é¸æ“‡åº—å®¶").setItems(Gshops.toArray(items), new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
 					
- 				    //¿ï¾Ü©±®a«á¡A­n¥hDB¸Ì§ä¦³¨S¦³³o­Ó©±®a
+ 				    //Ã¸Ã”Ã¦â€¹Â©Â±Ã†aÂ´Â·Â°Aâ‰ nâ€¢hDBâˆÃƒÃŸâ€°Â¶â‰¥Â®SÂ¶â‰¥â‰¥oâ‰ â€Â©Â±Ã†a
 					String shopGet = Gshops.get(which);
 					ArrayList<NameValuePair> location = new ArrayList<NameValuePair>();
 					ArrayList<JSONObject> shop_loc = new ArrayList<JSONObject>();
@@ -196,7 +196,7 @@ public class Home extends GDActivity{
 					}
 					
 					
-					//¥ÎaccountID§äipaID
+					//â€¢Å’accountIDÃŸâ€°ipaID
 					SharedPreferences settings = getSharedPreferences("Account", 0);
 			        ipaID = settings.getString("ipaID", "nouser");
 			        accountID = settings.getString("username", "nouser");
@@ -207,7 +207,7 @@ public class Home extends GDActivity{
 		        	editor.putString("lng",String.valueOf(lng));
 		        	editor.commit();
 			        
-			        //----·s¼W¦Ücheckin table----
+			        //----âˆ‘sÂºWÂ¶â€¹checkin table----
 					try{
 						ArrayList<NameValuePair> check_nameValuePairs = new ArrayList<NameValuePair>();
 						check_nameValuePairs.add(new BasicNameValuePair("IpaID",ipaID));
@@ -260,7 +260,12 @@ public class Home extends GDActivity{
 										if(!result_d.get(i).getString("couponID").equals("0"))
 										{
 											GetsID.add(count,result_d.get(i).getString("couponID"));
-											GetsName.add(count,"coupon:"+result_d.get(i).getString("couponID"));
+											
+											ArrayList<NameValuePair> c_detail_nameValuePairs = new ArrayList<NameValuePair>();
+											c_detail_nameValuePairs.add(new BasicNameValuePair("CouponID",result_d.get(i).getString("couponID")));
+											ArrayList<JSONObject> result_c_detail = db.DataSearch(c_detail_nameValuePairs,"coupon_search");
+											
+											GetsName.add(count,"coupon: "+result_c_detail.get(0).getString("couponName"));
 											AddWhat.add(count,"coupon");
 											count++;
 										}
@@ -283,7 +288,7 @@ public class Home extends GDActivity{
 								Log.e("coupon", GetsID.get(0));
 								
 //								
-								builder2.setTitle("¥Ø«e¥´¥d©ÒÀò±oªºÂI¼Æ¥i§I´«¥H¤U¿ï¶µ¡A½Ğ¿ï¾Ü¡C").setItems(GetsName.toArray(eee), new DialogInterface.OnClickListener() {
+								builder2.setTitle("ç›®å‰æ‰“å¡ç¸½å…±é»æ•¸å¯å…Œæ›æ­¤åº—å®¶æ‰€æä¾›çš„å„ªæƒ ï¼Œè«‹é¸æ“‡").setItems(GetsName.toArray(eee), new DialogInterface.OnClickListener() {
 									public void onClick(DialogInterface dialog, int which) {
 										
 										if(AddWhat.get(which).equals("coupon")){
@@ -291,7 +296,7 @@ public class Home extends GDActivity{
 											couponAdd_nameValuePairs.add(new BasicNameValuePair("AccID",accountID));
 											couponAdd_nameValuePairs.add(new BasicNameValuePair("CouponID",GetsID.get(which)));
 											ArrayList<JSONObject> result_e = db.DataSearch(couponAdd_nameValuePairs,"coupon_add");
-											//¦©moneyÁÙ¨S¼g
+											//Â¶Â©moneyÂ¡Å¸Â®SÂºg
 										}
 										else if(AddWhat.get(which).equals("clothes")){
 											ArrayList<NameValuePair> couponAdd_nameValuePairs = new ArrayList<NameValuePair>();
@@ -307,7 +312,7 @@ public class Home extends GDActivity{
 										}
 										
 								}});
-								builder2.setNegativeButton("¤£§I´«", new DialogInterface.OnClickListener() {
+								builder2.setNegativeButton("å–æ¶ˆ", new DialogInterface.OnClickListener() {
 						 
     	            		 
     	            		 
@@ -329,6 +334,7 @@ public class Home extends GDActivity{
 			        	Log.e("log_tag", "Error get data "+e.toString());				
 			        }
 					
+					
 				}
 			});
 			
@@ -347,7 +353,7 @@ public class Home extends GDActivity{
 		return true;
 	}
     
-    /*---------------¥´¥dµ²§ô---------------*/
+    /*---------------â€¢Â¥â€¢dÂµâ‰¤ÃŸÃ™---------------*/
 }
     
 

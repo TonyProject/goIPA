@@ -21,8 +21,9 @@ public class Honor extends Activity {
 	/** Called when the activity is first created. */
 	private LinearLayout linearLayout;
 	private DB db;
-	private List<String> honorList, nameList,desList;
-	private ArrayList<JSONObject> result_h, result_id, result_ipa;
+	private List<String> honorList, nameList,desList,imgList;
+	private List<Integer> likeList,ipaIDList;
+	private ArrayList<JSONObject> result_h, result_id, result_ipa,result_ac;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,9 +32,12 @@ public class Honor extends Activity {
         honorList = new ArrayList<String>();
         nameList = new ArrayList<String>();
         desList = new ArrayList<String>();
+        likeList = new ArrayList<Integer>();
+        imgList = new ArrayList<String>();
+        ipaIDList = new ArrayList<Integer>();
         db = new DB();
        /* 
-        //¿é¤J­n¤½¥¬ªºID
+        //Ã¸ÃˆÂ§Jâ‰ nÂ§Î©â€¢Â¨â„¢âˆ«ID
         String[] honor = {"100000001","100000000"};
         //
         
@@ -63,7 +67,17 @@ public class Honor extends Activity {
 				Log.e("r_act",result_h.get(i).getString("honorID"));
 				nameValuePairs_id.add(new BasicNameValuePair("HonorID",result_h.get(i).getString("honorID")));
 				result_id = db.DataSearch(nameValuePairs_id,"honor_search");
-			    nameList.add(result_id.get(0).getString("ipaID"));
+			    //nameList.add(result_id.get(0).getString("ipaID"));
+				
+				ArrayList<NameValuePair> nameValuePairs_acc = new ArrayList<NameValuePair>();
+				nameValuePairs_acc.add(new BasicNameValuePair("IpaID",result_id.get(0).getString("ipaID")));
+				
+				
+				result_ac = db.DataSearch(nameValuePairs_acc, "ipa_searchipa");
+				nameList.add(result_ac.get(0).getString("accountID"));
+				likeList.add(result_ac.get(0).getInt("likenum"));
+				ipaIDList.add(result_ac.get(0).getInt("ipaID"));
+				imgList.add(result_ac.get(0).getString("img"));
 			}
 			
 			
@@ -167,32 +181,32 @@ public class Honor extends Activity {
     		int k;
     		for(int i = 0; i < count; i++){
     			Button tempBtn = new Button(this);
-    			tempBtn.setText("®¥³ß¨Ï¥ÎªÌID¬°"+Name.get(i)+"ª±®aºaÀò"+honorName.get(i));
+    			tempBtn.setText("æ­å–œä½¿ç”¨è€…IDç‚º"+Name.get(i)+"çŽ©å®¶æ¦®ç²"+honorName.get(i));
     			
     			//+ " " +Name.get(i)
     			final String des = desList.get(i);
     			tempBtn.setId(i);
-    			//ÁÙ­n¼g«öButtonªº°Ê§@
+    			//Â¡Å¸â‰ nÂºgÂ´Ë†Buttonâ„¢âˆ«âˆžÂ ÃŸ@
     			tempBtn.setOnClickListener(new View.OnClickListener() {
     	             public void onClick(View v) {
-    	            	 int id = v.getId();
+    	            	 final int id = v.getId();
     	            	 
     	            	 try{
         	            	 
         	            	 
         	 				final Bundle bundle1 = new Bundle();
        	            	   
-       	            	    bundle1.putString("ID", Name.get(id));
+       	            	    //bundle1.putString("ID", Name.get(id));
        	            	    
         	 				 
         	 				 
         	            	 
-        	            	 builder.setMessage("Honor¦WºÙ:"+ honorName.get(id)+ "\n" 
-        	            			 +"Honor»¡©ú:"+des+ "\n" + "\n"
+        	            	 builder.setMessage("Honoråç¨±:"+ honorName.get(id)+ "\n" 
+        	            			 +"Honorèªªæ˜Ž:"+des+ "\n" + "\n"
         	            			 
         	            			 );
         	            	 
-        	            	 builder.setPositiveButton("ªð¦^", new DialogInterface.OnClickListener() {
+        	            	 builder.setPositiveButton("è¿”å›ž", new DialogInterface.OnClickListener() {
     						 
         	            		 
         	            		 
@@ -203,16 +217,19 @@ public class Honor extends Activity {
     							}
     						});
         	            	 
-        	            	 builder.setNegativeButton("Æ[¬Ý±o¥D", new DialogInterface.OnClickListener() {
+        	            	 builder.setNegativeButton("è§€çœ‹å¾—ä¸»", new DialogInterface.OnClickListener() {
     							
     							@Override
     							public void onClick(DialogInterface dialog, int which) {
     								// TODO Auto-generated method stub
-    								//Intent man = new Intent();
-    		    	            	//man.setClass(Honor.this, ??.class);
+    								
+    								Intent man = new Intent();
+    		    	            	man.setClass(Honor.this, people_info_image.class);
     		    	            	
-    		    	            	//man.putExtras(bundle1);
-    		    	            	//startActivity(man);
+    		    	            	man.putExtra("ipaID",ipaIDList.get(id));
+    		    	            	man.putExtra("img",imgList.get(id));
+    		    	            	man.putExtra("likenum",likeList.get(id));
+    		    	            	startActivity(man);
     		    	            	
     							}
     						});
