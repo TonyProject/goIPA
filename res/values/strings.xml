@@ -9,4 +9,5 @@
     <string name="fat">肥胖</string>
     <string name="out">行動</string>
     <string name="sunny">陽光</string>
+    <color name="black">#000000</color>
 </resources>

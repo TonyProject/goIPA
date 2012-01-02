@@ -60,6 +60,7 @@ public class Talk extends Activity {
 		String islat = settings.getString("lat", "");
 		//say.setClickable(false);
 		//say.setEnabled(false);
+		renew();
         if(islng=="")
         {
         	say.setEnabled(false);
@@ -257,6 +258,8 @@ public class Talk extends Activity {
 			{
 				TextView t = new TextView(this);
 				t.setText(id.get(i)+ " : " +msg.get(i));
+				t.setTextColor(R.color.black);
+				t.setTextSize(20);
 				showlayout.addView(t);
 			}
 		}

@@ -593,6 +593,7 @@ containing a value of this type.
         public static final int url=0x7f010051;
     }
     public static final class color {
+        public static final int black=0x7f060002;
         public static final int gd_action_bar_divider_tint=0x7f060001;
         public static final int gd_action_bar_tint=0x7f060000;
     }
